@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maël Combes Peirache — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header id="navbar">
+    <a href="index.html" class="nav-logo">Maël Combes Peirache</a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="alternance.html">Alternance</a>
+      <a href="projets.html">Projets</a>
+    </nav>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Grille de points déco -->
+  <div class="dot-grid" aria-hidden="true"></div>
+
+  <!-- HERO -->
+  <div class="hero-wrap">
+    <div class="hero-intro">
+      <div class="hero-avatar" title="Photo à venir">👤</div>
+      <div class="hero-name-block">
+        <span class="eyebrow">Étudiant BUT Science des Données</span>
+        <h1 class="hero-name">Maël<br /><span>Combes Peirache</span></h1>
+      </div>
+    </div>
+
+    <p class="hero-tagline">
+      <span id="typed-text"></span><span class="cursor-blink"></span>
+    </p>
+
+    <p class="hero-desc">
+      Étudiant en 1ère année de <strong>BUT Science des Données</strong>, je m'intéresse 
+      à l'analyse de données, à la statistique et à la programmation. 
+      Rigoureux et curieux, je cherche à mettre mes compétences au service de projets concrets.
+    </p>
+
+    <div class="hero-cta">
+      <a href="projets.html" class="btn btn-primary">Voir mes projets →</a>
+      <a href="apropos.html" class="btn btn-ghost">En savoir plus</a>
+    </div>
+  </div>
+
+  <!-- Cards de navigation -->
+  <div class="hero-cards">
+    <a href="apropos.html" class="hcard">
+      <span class="hcard-icon">👤</span>
+      <h3>À propos</h3>
+      <p>Mon parcours, mes compétences et ce qui me motive</p>
+      <span class="hcard-arrow">→</span>
+    </a>
+    <a href="alternance.html" class="hcard">
+      <span class="hcard-icon">🏢</span>
+      <h3>Alternance</h3>
+      <p>Mon expérience en entreprise et mes missions</p>
+      <span class="hcard-arrow">→</span>
+    </a>
+    <a href="projets.html" class="hcard">
+      <span class="hcard-icon">🚀</span>
+      <h3>Projets</h3>
+      <p>Mes réalisations dans le cadre de ma formation</p>
+      <span class="hcard-arrow">→</span>
+    </a>
+  </div>
+
+  <footer style="margin-top: 5rem;">
+    <p>Conçu par <span>Maël Combes Peirache</span> · <span id="year"></span></p>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // Grille de points
+    const g = document.querySelector('.dot-grid');
+    for (let i = 0; i < 30; i++) g.appendChild(document.createElement('span'));
+
+    // Typewriter
+    const phrases = [
+      'Étudiant en Science des Données',
+      'Passionné par l\'analyse de données',
+      'Curieux et rigoureux',
+      'À la recherche de défis concrets'
+    ];
+    let pIdx = 0, cIdx = 0, del = false;
+    const el = document.getElementById('typed-text');
+    const loop = () => {
+      const w = phrases[pIdx];
+      if (!del) { el.textContent = w.slice(0, ++cIdx); if (cIdx === w.length) { del = true; setTimeout(loop, 1800); return; } }
+      else { el.textContent = w.slice(0, --cIdx); if (cIdx === 0) { del = false; pIdx = (pIdx + 1) % phrases.length; } }
+      setTimeout(loop, del ? 42 : 78);
+    };
+    setTimeout(loop, 900);
+  </script>
+</body>
+</html>
