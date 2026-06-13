@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Projets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header id="navbar">
+    <a href="index.html" class="nav-logo">[Prénom Nom]</a>
+    <nav class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="alternance.html">Alternance</a>
+      <a href="projets.html" class="active">Projets</a>
+    </nav>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="page-main">
+
+    <div class="page-header reveal">
+      <p class="section-label">Réalisations universitaires</p>
+      <h1 class="page-title">Mes projets</h1>
+      <div class="section-divider"></div>
+      <p class="page-intro">Voici une sélection de projets réalisés dans le cadre de ma formation. Chacun m'a permis de développer des compétences spécifiques, seul ou en équipe.</p>
+    </div>
+
+    <!-- PROJET PHARE (mis en avant) -->
+    <div class="project-featured reveal">
+      <div class="pf-badge">Projet principal</div>
+      <div class="pf-body">
+        <div class="pf-text">
+          <span class="pf-icon">🚀</span>
+          <h2>[Nom du projet phare]</h2>
+          <p class="pf-desc">
+            Décris ici ton projet le plus important ou le plus représentatif. 
+            Contexte, objectif, ta contribution, les résultats obtenus. 
+            N'hésite pas à être précis : jury universitaire ou recruteur, tout le monde apprécie les détails concrets.
+          </p>
+          <div class="pf-tags">
+            <span class="tag">Technologie 1</span>
+            <span class="tag">Technologie 2</span>
+            <span class="tag">Méthode agile</span>
+          </div>
+          <div class="pf-links">
+            <a href="#" class="btn btn-primary">Voir le projet →</a>
+            <a href="#" class="btn btn-secondary">GitHub</a>
+          </div>
+        </div>
+        <div class="pf-visual">
+          <!-- Tu peux remplacer ça par une vraie capture d'écran -->
+          <div class="pf-img-placeholder">
+            <span>🖼️</span>
+            <p>Capture / visuel du projet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRILLE DES AUTRES PROJETS -->
+    <h2 class="subsection-title reveal">Autres projets</h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <span class="project-icon">🖥️</span>
+          <a href="#" class="project-link" title="Voir le projet">↗</a>
+        </div>
+        <h3>[Nom du projet 2]</h3>
+        <p class="proj-context">📚 [Matière / module] · [Année]</p>
+        <p>Décris le projet : objectif, ce que tu as fait, résultats ou note obtenue si tu veux le mentionner.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <span class="project-icon">📊</span>
+          <a href="#" class="project-link" title="Voir le projet">↗</a>
+        </div>
+        <h3>[Nom du projet 3]</h3>
+        <p class="proj-context">📚 [Matière / module] · [Année]</p>
+        <p>Décris le projet : objectif, ce que tu as fait, résultats ou note obtenue si tu veux le mentionner.</p>
+        <div class="project-tags">
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <span class="project-icon">🔗</span>
+          <a href="#" class="project-link" title="Voir le projet">↗</a>
+        </div>
+        <h3>[Nom du projet 4]</h3>
+        <p class="proj-context">📚 [Matière / module] · [Année]</p>
+        <p>Décris le projet : objectif, ce que tu as fait, résultats ou note obtenue si tu veux le mentionner.</p>
+        <div class="project-tags">
+          <span class="tag">Java</span>
+          <span class="tag">UML</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <span class="project-icon">🌐</span>
+          <a href="#" class="project-link" title="Voir le projet">↗</a>
+        </div>
+        <h3>[Nom du projet 5]</h3>
+        <p class="proj-context">📚 [Matière / module] · [Année]</p>
+        <p>Décris le projet : objectif, ce que tu as fait, résultats ou note obtenue si tu veux le mentionner.</p>
+        <div class="project-tags">
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Conçu &amp; développé par <span>[Prénom Nom]</span> · <span id="year"></span></p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
