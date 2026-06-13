@@ -3,801 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio — [Ton Prénom Nom]</title>
+  <title>Portfolio — Accueil</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    /* ──────────────────────────────────────────────
-       TOKENS
-    ────────────────────────────────────────────── */
-    :root {
-      --bg:        #0A0A0F;
-      --bg-card:   #13131A;
-      --bg-hover:  #1C1C27;
-      --accent:    #4F8EF7;
-      --accent-2:  #8B5CF6;
-      --text:      #E8E8F0;
-      --muted:     #7A7A90;
-      --border:    #2A2A38;
-      --font-display: 'Space Grotesk', sans-serif;
-      --font-body:    'Inter', sans-serif;
-    }
-
-    /* ──────────────────────────────────────────────
-       RESET & BASE
-    ────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; cursor: none; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* ──────────────────────────────────────────────
-       CURSEUR CUSTOM
-    ────────────────────────────────────────────── */
-    #cursor-dot, #cursor-ring {
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: opacity .3s;
-    }
-    #cursor-dot {
-      width: 8px; height: 8px;
-      background: var(--accent);
-    }
-    #cursor-ring {
-      width: 36px; height: 36px;
-      border: 1.5px solid var(--accent);
-      opacity: .5;
-      transition: width .2s, height .2s, opacity .3s;
-    }
-    body:hover #cursor-dot, body:hover #cursor-ring { opacity: 1; }
-    .cursor-grow #cursor-ring { width: 56px; height: 56px; opacity: .25; }
-
-    /* ──────────────────────────────────────────────
-       NAV LATÉRALE
-    ────────────────────────────────────────────── */
-    nav#sidenav {
-      position: fixed;
-      right: 2rem;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      gap: .75rem;
-      align-items: flex-end;
-    }
-
-    nav#sidenav a {
-      display: flex;
-      align-items: center;
-      gap: .6rem;
-      font-family: var(--font-display);
-      font-size: .7rem;
-      font-weight: 500;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transition: color .25s;
-    }
-    nav#sidenav a::after {
-      content: '';
-      display: block;
-      width: 24px; height: 1.5px;
-      background: var(--muted);
-      transition: width .25s, background .25s;
-    }
-    nav#sidenav a.active,
-    nav#sidenav a:hover { color: var(--text); }
-    nav#sidenav a.active::after,
-    nav#sidenav a:hover::after { width: 40px; background: var(--accent); }
-
-    /* ──────────────────────────────────────────────
-       SECTIONS
-    ────────────────────────────────────────────── */
-    section {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 6rem 5rem 6rem 7rem;
-      position: relative;
-    }
-
-    /* ──────────────────────────────────────────────
-       HERO — ACCUEIL
-    ────────────────────────────────────────────── */
-    #accueil {
-      padding-left: 10vw;
-      overflow: hidden;
-    }
-
-    .hero-eyebrow {
-      font-size: .8rem;
-      letter-spacing: .25em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp .6s .2s forwards;
-    }
-
-    .hero-name {
-      font-family: var(--font-display);
-      font-size: clamp(3.5rem, 8vw, 7rem);
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -.02em;
-      opacity: 0;
-      animation: fadeUp .7s .4s forwards;
-    }
-    .hero-name span { color: var(--accent); }
-
-    .hero-role {
-      margin-top: 1.25rem;
-      font-family: var(--font-display);
-      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-      font-weight: 300;
-      color: var(--muted);
-      opacity: 0;
-      animation: fadeUp .7s .6s forwards;
-      min-height: 2em;
-    }
-    #typed-text { color: var(--text); }
-    .cursor-blink {
-      display: inline-block;
-      width: 2px; height: 1em;
-      background: var(--accent);
-      margin-left: 2px;
-      vertical-align: middle;
-      animation: blink 1s step-end infinite;
-    }
-
-    .hero-cta {
-      margin-top: 2.5rem;
-      display: flex;
-      gap: 1rem;
-      opacity: 0;
-      animation: fadeUp .7s .9s forwards;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      padding: .75rem 1.75rem;
-      border-radius: 4px;
-      font-family: var(--font-display);
-      font-size: .875rem;
-      font-weight: 500;
-      letter-spacing: .05em;
-      transition: all .2s;
-      cursor: none;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-    .btn-primary:hover { background: #6aa0ff; transform: translateY(-2px); }
-    .btn-secondary {
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-
-    /* grille de points décorative */
-    .hero-grid {
-      position: absolute;
-      right: 8vw;
-      top: 50%;
-      transform: translateY(-50%);
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      grid-template-rows: repeat(8, 1fr);
-      gap: 20px;
-      opacity: .12;
-      pointer-events: none;
-    }
-    .hero-grid span {
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--accent);
-      display: block;
-    }
-
-    /* ──────────────────────────────────────────────
-       SECTION TITLE HELPER
-    ────────────────────────────────────────────── */
-    .section-label {
-      font-size: .72rem;
-      letter-spacing: .25em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: .75rem;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -.02em;
-      margin-bottom: 1.5rem;
-    }
-    .section-divider {
-      width: 48px; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      border-radius: 2px;
-      margin-bottom: 2.5rem;
-    }
-
-    /* ──────────────────────────────────────────────
-       À PROPOS
-    ────────────────────────────────────────────── */
-    #apropos {
-      background: linear-gradient(135deg, var(--bg) 60%, #0e0e1f 100%);
-    }
-
-    .about-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-      max-width: 900px;
-    }
-
-    .about-text p {
-      color: var(--muted);
-      margin-bottom: 1.25rem;
-      font-size: 1rem;
-      line-height: 1.8;
-    }
-    .about-text p strong { color: var(--text); font-weight: 500; }
-
-    .about-skills {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .skill-bar-item { display: flex; flex-direction: column; gap: .4rem; }
-    .skill-bar-header {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--font-display);
-      font-size: .8rem;
-      font-weight: 500;
-    }
-    .skill-bar-header span:last-child { color: var(--muted); }
-    .skill-bar-track {
-      height: 4px;
-      background: var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .skill-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      border-radius: 4px;
-      width: 0;
-      transition: width 1.2s cubic-bezier(.16,1,.3,1);
-    }
-
-    /* ──────────────────────────────────────────────
-       ALTERNANCE
-    ────────────────────────────────────────────── */
-    #alternance {
-      background: var(--bg);
-    }
-
-    .alternance-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      max-width: 900px;
-      align-items: start;
-    }
-
-    .alt-info {}
-    .alt-info p {
-      color: var(--muted);
-      margin-bottom: 1rem;
-      line-height: 1.8;
-    }
-
-    .alt-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .alt-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.25rem 1.5rem;
-      transition: border-color .2s, transform .2s;
-    }
-    .alt-card:hover { border-color: var(--accent); transform: translateX(4px); }
-    .alt-card-icon {
-      font-size: 1.4rem;
-      margin-bottom: .5rem;
-    }
-    .alt-card h4 {
-      font-family: var(--font-display);
-      font-size: .95rem;
-      font-weight: 600;
-      margin-bottom: .3rem;
-    }
-    .alt-card p {
-      font-size: .85rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* Timeline */
-    .alt-timeline {
-      position: relative;
-      padding-left: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .alt-timeline::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 6px;
-      bottom: 6px;
-      width: 1px;
-      background: var(--border);
-    }
-    .timeline-item {
-      position: relative;
-      margin-bottom: 1.5rem;
-    }
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -1.5rem;
-      top: 6px;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      transform: translateX(-3px);
-    }
-    .timeline-item .date {
-      font-size: .72rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: .2rem;
-    }
-    .timeline-item h4 {
-      font-family: var(--font-display);
-      font-size: .9rem;
-      font-weight: 600;
-    }
-    .timeline-item p {
-      font-size: .82rem;
-      color: var(--muted);
-    }
-
-    /* ──────────────────────────────────────────────
-       PROJETS
-    ────────────────────────────────────────────── */
-    #projets {
-      background: linear-gradient(135deg, var(--bg) 60%, #0a0f1f 100%);
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 960px;
-    }
-
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: .75rem;
-      transition: border-color .25s, transform .25s, box-shadow .25s;
-      cursor: none;
-    }
-    .project-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(79,142,247,.08);
-    }
-
-    .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-    .project-icon { font-size: 1.75rem; }
-    .project-link {
-      width: 32px; height: 32px;
-      display: flex; align-items: center; justify-content: center;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      color: var(--muted);
-      font-size: .8rem;
-      transition: border-color .2s, color .2s;
-      cursor: none;
-    }
-    .project-card:hover .project-link { border-color: var(--accent); color: var(--accent); }
-
-    .project-card h3 {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    .project-card p {
-      font-size: .875rem;
-      color: var(--muted);
-      flex: 1;
-      line-height: 1.65;
-    }
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .4rem;
-      margin-top: .25rem;
-    }
-    .tag {
-      font-size: .68rem;
-      font-family: var(--font-display);
-      font-weight: 500;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      padding: .2rem .6rem;
-      border-radius: 3px;
-      background: rgba(79,142,247,.1);
-      color: var(--accent);
-      border: 1px solid rgba(79,142,247,.2);
-    }
-
-    /* ──────────────────────────────────────────────
-       FOOTER
-    ────────────────────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 3rem;
-      border-top: 1px solid var(--border);
-      font-size: .8rem;
-      color: var(--muted);
-    }
-    footer span { color: var(--accent); }
-
-    /* ──────────────────────────────────────────────
-       ANIMATIONS
-    ────────────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* ──────────────────────────────────────────────
-       RESPONSIVE
-    ────────────────────────────────────────────── */
-    @media (max-width: 900px) {
-      section { padding: 5rem 2rem; }
-      .about-layout, .alternance-layout { grid-template-columns: 1fr; gap: 3rem; }
-      nav#sidenav { display: none; }
-      .hero-grid { display: none; }
-      .hero-name { font-size: clamp(2.8rem, 10vw, 5rem); }
-    }
-    @media (max-width: 500px) {
-      html { cursor: auto; }
-      #cursor-dot, #cursor-ring { display: none; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- CURSEUR -->
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
 
-  <!-- NAV LATÉRALE -->
-  <nav id="sidenav">
-    <a href="#accueil"   data-section="accueil">Accueil</a>
-    <a href="#apropos"   data-section="apropos">À propos</a>
-    <a href="#alternance" data-section="alternance">Alternance</a>
-    <a href="#projets"   data-section="projets">Projets</a>
-  </nav>
+  <!-- NAVBAR -->
+  <header id="navbar">
+    <a href="index.html" class="nav-logo">[Prénom Nom]</a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="alternance.html">Alternance</a>
+      <a href="projets.html">Projets</a>
+    </nav>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
 
-  <!-- ══════════════════════════════════════════
-       SECTION 1 — ACCUEIL
-  ══════════════════════════════════════════ -->
-  <section id="accueil">
-    <p class="hero-eyebrow">Portfolio · Étudiant</p>
-    <h1 class="hero-name">
-      [Prénom]<br /><span>[Nom]</span>
-    </h1>
-    <p class="hero-role">
-      <span id="typed-text"></span><span class="cursor-blink"></span>
-    </p>
-    <div class="hero-cta">
-      <a href="#projets" class="btn btn-primary">Voir mes projets →</a>
-      <a href="#alternance" class="btn btn-secondary">Mon alternance</a>
-    </div>
-
-    <!-- Grille de points décorative -->
-    <div class="hero-grid" aria-hidden="true">
-      <!-- 64 points générés par JS -->
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       SECTION 2 — À PROPOS
-  ══════════════════════════════════════════ -->
-  <section id="apropos">
-    <div class="reveal">
-      <p class="section-label">01 — À propos de moi</p>
-      <h2 class="section-title">Qui suis-je ?</h2>
-      <div class="section-divider"></div>
-    </div>
-
-    <div class="about-layout">
-      <div class="about-text reveal">
-        <p>
-          Bonjour ! Je m'appelle <strong>[Prénom Nom]</strong>, étudiant en 
-          <strong>[Ton cursus, ex. BUT Informatique / Licence Pro / Master…]</strong> 
-          à <strong>[Nom de ton université / IUT]</strong>.
-        </p>
-        <p>
-          Passionné par <strong>[domaine 1]</strong> et <strong>[domaine 2]</strong>, 
-          j'aime transformer des idées en solutions concrètes. Curieux de nature, 
-          je cherche constamment à apprendre et à relever de nouveaux défis.
-        </p>
-        <p>
-          En dehors des études, tu me trouveras à <strong>[loisir 1]</strong>, 
-          ou en train d'explorer <strong>[loisir 2]</strong>.
-        </p>
-      </div>
-
-      <div class="about-skills reveal">
-        <!-- Adapte les compétences et niveaux à ta situation -->
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span>Compétence 1 (ex. Python)</span>
-            <span>75%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" data-width="75"></div>
-          </div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span>Compétence 2 (ex. SQL)</span>
-            <span>65%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" data-width="65"></div>
-          </div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span>Compétence 3 (ex. HTML/CSS)</span>
-            <span>80%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" data-width="80"></div>
-          </div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span>Compétence 4 (ex. Travail en équipe)</span>
-            <span>90%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" data-width="90"></div>
-          </div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span>Compétence 5 (ex. Gestion de projet)</span>
-            <span>60%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" data-width="60"></div>
-          </div>
-        </div>
+  <!-- HERO -->
+  <main class="hero-page">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Portfolio · Étudiant</p>
+      <h1 class="hero-name">
+        [Prénom]<br /><span>[Nom]</span>
+      </h1>
+      <p class="hero-role">
+        <span id="typed-text"></span><span class="cursor-blink"></span>
+      </p>
+      <div class="hero-cta">
+        <a href="projets.html" class="btn btn-primary">Voir mes projets →</a>
+        <a href="alternance.html" class="btn btn-secondary">Mon alternance</a>
       </div>
     </div>
-  </section>
 
-  <!-- ══════════════════════════════════════════
-       SECTION 3 — ALTERNANCE
-  ══════════════════════════════════════════ -->
-  <section id="alternance">
-    <div class="reveal">
-      <p class="section-label">02 — Alternance</p>
-      <h2 class="section-title">Mon expérience en entreprise</h2>
-      <div class="section-divider"></div>
+    <!-- Grille décorative -->
+    <div class="hero-grid" aria-hidden="true"></div>
+
+    <!-- Cards de navigation rapide -->
+    <div class="hero-nav-cards">
+      <a href="apropos.html" class="hnav-card">
+        <span class="hnav-icon">👤</span>
+        <h3>À propos</h3>
+        <p>Qui suis-je, mes compétences et ma personnalité</p>
+        <span class="hnav-arrow">→</span>
+      </a>
+      <a href="alternance.html" class="hnav-card">
+        <span class="hnav-icon">🏢</span>
+        <h3>Alternance</h3>
+        <p>Mon expérience en entreprise et mes missions</p>
+        <span class="hnav-arrow">→</span>
+      </a>
+      <a href="projets.html" class="hnav-card">
+        <span class="hnav-icon">🚀</span>
+        <h3>Projets</h3>
+        <p>Mes réalisations et projets universitaires</p>
+        <span class="hnav-arrow">→</span>
+      </a>
     </div>
+  </main>
 
-    <div class="alternance-layout">
-      <div class="alt-info reveal">
-        <p>
-          Dans le cadre de ma formation, j'effectue une alternance au sein de 
-          <strong>[Nom de l'entreprise]</strong>, depuis <strong>[mois/année]</strong>.
-          Cette expérience m'a permis de consolider mes acquis théoriques et de 
-          développer une vraie vision du monde professionnel.
-        </p>
-
-        <!-- Timeline de la formation en alternance -->
-        <div class="alt-timeline">
-          <div class="timeline-item">
-            <p class="date">Année 1 — [ex. 2023–2024]</p>
-            <h4>[Intitulé du poste]</h4>
-            <p>[Courte description de tes missions]</p>
-          </div>
-          <div class="timeline-item">
-            <p class="date">Année 2 — [ex. 2024–2025]</p>
-            <h4>[Intitulé du poste]</h4>
-            <p>[Courte description de tes missions]</p>
-          </div>
-          <div class="timeline-item">
-            <p class="date">En cours — [ex. 2025–2026]</p>
-            <h4>[Intitulé du poste actuel]</h4>
-            <p>[Ce sur quoi tu travailles actuellement]</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cartes compétences développées -->
-      <div class="alt-cards reveal">
-        <div class="alt-card">
-          <div class="alt-card-icon">⚙️</div>
-          <h4>Compétences techniques</h4>
-          <p>Décris ici les outils, langages ou technologies que tu utilises au quotidien dans ton entreprise.</p>
-        </div>
-        <div class="alt-card">
-          <div class="alt-card-icon">🤝</div>
-          <h4>Compétences relationnelles</h4>
-          <p>Travail en équipe, communication avec les clients, participation aux réunions d'équipe…</p>
-        </div>
-        <div class="alt-card">
-          <div class="alt-card-icon">📈</div>
-          <h4>Montée en autonomie</h4>
-          <p>Tu peux ici parler d'un projet dont tu as eu la charge, d'une responsabilité que tu as progressivement prise.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       SECTION 4 — PROJETS UNIVERSITAIRES
-  ══════════════════════════════════════════ -->
-  <section id="projets">
-    <div class="reveal">
-      <p class="section-label">03 — Projets universitaires</p>
-      <h2 class="section-title">Ce que j'ai construit</h2>
-      <div class="section-divider"></div>
-    </div>
-
-    <div class="projects-grid">
-
-      <!-- Projet 1 -->
-      <div class="project-card reveal">
-        <div class="project-header">
-          <span class="project-icon">🖥️</span>
-          <a href="#" class="project-link" title="Voir le projet">↗</a>
-        </div>
-        <h3>Nom du Projet 1</h3>
-        <p>Décris brièvement le contexte, l'objectif et ta contribution. Qu'est-ce que ça t'a appris ?</p>
-        <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">SQL</span>
-        </div>
-      </div>
-
-      <!-- Projet 2 -->
-      <div class="project-card reveal">
-        <div class="project-header">
-          <span class="project-icon">📊</span>
-          <a href="#" class="project-link" title="Voir le projet">↗</a>
-        </div>
-        <h3>Nom du Projet 2</h3>
-        <p>Décris brièvement le contexte, l'objectif et ta contribution. Qu'est-ce que ça t'a appris ?</p>
-        <div class="project-tags">
-          <span class="tag">HTML/CSS</span>
-          <span class="tag">JavaScript</span>
-        </div>
-      </div>
-
-      <!-- Projet 3 -->
-      <div class="project-card reveal">
-        <div class="project-header">
-          <span class="project-icon">🔗</span>
-          <a href="#" class="project-link" title="Voir le projet">↗</a>
-        </div>
-        <h3>Nom du Projet 3</h3>
-        <p>Décris brièvement le contexte, l'objectif et ta contribution. Qu'est-ce que ça t'a appris ?</p>
-        <div class="project-tags">
-          <span class="tag">Java</span>
-          <span class="tag">UML</span>
-        </div>
-      </div>
-
-      <!-- Projet 4 (placeholder, à remplir ou supprimer) -->
-      <div class="project-card reveal">
-        <div class="project-header">
-          <span class="project-icon">🌐</span>
-          <a href="#" class="project-link" title="Voir le projet">↗</a>
-        </div>
-        <h3>Nom du Projet 4</h3>
-        <p>Décris brièvement le contexte, l'objectif et ta contribution. Qu'est-ce que ça t'a appris ?</p>
-        <div class="project-tags">
-          <span class="tag">React</span>
-          <span class="tag">Node.js</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>Conçu &amp; développé par <span>[Prénom Nom]</span> · Portfolio universitaire · <span id="year"></span></p>
-  </footer>
-
-  <!-- ══════════════════════════════════════════
-       SCRIPTS
-  ══════════════════════════════════════════ -->
+  <script src="main.js"></script>
   <script>
-    /* --- Curseur custom --- */
-    const dot  = document.getElementById('cursor-dot');
-    const ring = document.getElementById('cursor-ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-    const animCursor = () => {
-      rx += (mx - rx) * .15;
-      ry += (my - ry) * .15;
-      dot.style.left  = mx + 'px';
-      dot.style.top   = my + 'px';
-      ring.style.left = rx + 'px';
-      ring.style.top  = ry + 'px';
-      requestAnimationFrame(animCursor);
-    };
-    animCursor();
-
-    document.querySelectorAll('a, button, .project-card').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-grow'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-grow'));
-    });
-
-    /* --- Grille de points héro --- */
-    const grid = document.querySelector('.hero-grid');
-    for (let i = 0; i < 64; i++) grid.appendChild(document.createElement('span'));
-
-    /* --- Effet de frappe (typewriter) --- */
+    // Typewriter
     const phrases = [
       'Étudiant en alternance',
       'Développeur curieux',
@@ -806,7 +81,6 @@
     ];
     let pIdx = 0, cIdx = 0, deleting = false;
     const typedEl = document.getElementById('typed-text');
-
     const typeLoop = () => {
       const word = phrases[pIdx];
       if (!deleting) {
@@ -818,40 +92,11 @@
       }
       setTimeout(typeLoop, deleting ? 45 : 80);
     };
-    setTimeout(typeLoop, 1200);
+    setTimeout(typeLoop, 800);
 
-    /* --- IntersectionObserver : reveal + skill bars + nav active --- */
-    const reveals = document.querySelectorAll('.reveal');
-    const bars    = document.querySelectorAll('.skill-bar-fill');
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('nav#sidenav a');
-
-    const revealObs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: .15 });
-    reveals.forEach(r => revealObs.observe(r));
-
-    const barObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          bars.forEach(b => { b.style.width = b.dataset.width + '%'; });
-        }
-      });
-    }, { threshold: .3 });
-    document.querySelector('#apropos') && barObs.observe(document.querySelector('#apropos'));
-
-    const sectionObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const id = e.target.id;
-          navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === id));
-        }
-      });
-    }, { threshold: .4 });
-    sections.forEach(s => sectionObs.observe(s));
-
-    /* --- Année footer --- */
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Grille de points
+    const grid = document.querySelector('.hero-grid');
+    for (let i = 0; i < 64; i++) grid.appendChild(document.createElement('span'));
   </script>
 </body>
 </html>
