@@ -1,3 +1,4 @@
+cat > /mnt/user-data/outputs/portfolio/alternance.html << 'ENDOFFILE'
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,6 +9,80 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .coming-soon-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem;
+      gap: 1.5rem;
+    }
+    .coming-icon {
+      font-size: 4rem;
+      line-height: 1;
+      margin-bottom: .5rem;
+    }
+    .coming-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    .coming-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.8;
+    }
+    .coming-sub strong { color: var(--text); font-weight: 500; }
+    .coming-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .5rem 1.25rem;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      font-family: var(--font-display);
+      font-size: .8rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .coming-badge span { color: var(--accent); }
+    .coming-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 700px;
+    }
+    .coming-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 1.25rem;
+      text-align: left;
+    }
+    .coming-card-icon { font-size: 1.4rem; margin-bottom: .6rem; }
+    .coming-card h4 {
+      font-family: var(--font-display);
+      font-size: .88rem;
+      font-weight: 600;
+      margin-bottom: .35rem;
+    }
+    .coming-card p { font-size: .8rem; color: var(--muted); line-height: 1.6; }
+    @media (max-width: 600px) {
+      .coming-cards { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -33,103 +108,36 @@
       <span class="eyebrow">Expérience professionnelle</span>
       <h1 class="page-title">Mon alternance</h1>
       <div class="divider"></div>
-      <p class="lead">
-        Dans le cadre de mon BUT Science des Données, j'effectue mon alternance au sein de 
-        <strong>[Nom de l'entreprise]</strong>. Cette expérience me permet de confronter 
-        mes apprentissages théoriques à des problématiques réelles liées à la donnée.
+    </div>
+
+    <div class="coming-soon-wrap reveal">
+      <div class="coming-icon">🚀</div>
+      <h2 class="coming-title">À venir</h2>
+      <p class="coming-sub">
+        Mon alternance débutera en <strong>2ème année de BUT Science des Données</strong>, 
+        à partir de <strong>septembre 2026</strong>. Cette page sera mise à jour dès le début 
+        de mon contrat pour présenter mon entreprise, mes missions et mon évolution.
       </p>
-    </div>
-
-    <!-- ENTREPRISE -->
-    <div class="company-block reveal">
-      <div class="company-logo">🏢</div>
-      <div class="company-info">
-        <h2>[Nom de l'entreprise]</h2>
-        <p>[Secteur d'activité] · [Ville]</p>
-        <p class="period">📅 Depuis [mois] [année] · [Intitulé du poste]</p>
-      </div>
-    </div>
-
-    <!-- TIMELINE + MISSIONS -->
-    <div class="section-block alt-grid reveal">
-
-      <div>
-        <h2>Déroulement</h2>
-        <div class="tl">
-          <div class="tl-item">
-            <div class="tl-dot"></div>
-            <span class="tl-date">[ex. Sept. 2024 – Déc. 2024]</span>
-            <h4>Intégration & découverte</h4>
-            <p>Prise en main des outils de l'entreprise, compréhension de l'environnement de données, premières missions d'exploration.</p>
-          </div>
-          <div class="tl-item">
-            <div class="tl-dot"></div>
-            <span class="tl-date">[ex. Jan. 2025 – Avr. 2025]</span>
-            <h4>Montée en compétences</h4>
-            <p>Participation active aux projets de l'équipe, prise en charge de missions plus autonomes.</p>
-          </div>
-          <div class="tl-item current">
-            <div class="tl-dot"></div>
-            <span class="tl-date">[ex. Avr. 2025 – aujourd'hui]</span>
-            <h4>Autonomie & responsabilités</h4>
-            <p>Pilotage de [mission ou projet], livraison de livrables concrets à l'équipe.</p>
-          </div>
-        </div>
+      <div class="coming-badge">
+        📅 Recherche d'alternance prévue pour <span>septembre 2026</span>
       </div>
 
-      <div>
-        <h2>Mes missions</h2>
-        <div class="missions">
-          <div class="mission">
-            <span class="mission-icon">📊</span>
-            <div>
-              <h4>Analyse de données</h4>
-              <p>Exploration, nettoyage et analyse de jeux de données pour répondre à des questions métier précises.</p>
-            </div>
-          </div>
-          <div class="mission">
-            <span class="mission-icon">🐍</span>
-            <div>
-              <h4>Développement de scripts</h4>
-              <p>Automatisation de traitements de données en Python / SQL pour gagner en efficacité.</p>
-            </div>
-          </div>
-          <div class="mission">
-            <span class="mission-icon">📈</span>
-            <div>
-              <h4>Visualisation & reporting</h4>
-              <p>Création de tableaux de bord et de rapports pour faciliter la prise de décision.</p>
-            </div>
-          </div>
-          <div class="mission">
-            <span class="mission-icon">🤝</span>
-            <div>
-              <h4>Travail en équipe</h4>
-              <p>Participation aux réunions, échanges avec les différents interlocuteurs internes.</p>
-            </div>
-          </div>
+      <!-- Ce que je recherche -->
+      <div class="coming-cards">
+        <div class="coming-card">
+          <div class="coming-card-icon">🎯</div>
+          <h4>Domaine visé</h4>
+          <p>Data Analyst, Data Science, Business Intelligence ou tout poste en lien avec la valorisation de la donnée.</p>
         </div>
-      </div>
-    </div>
-
-    <!-- CE QUE J'EN RETIRE -->
-    <div class="section-block reveal">
-      <h2>Ce que cette expérience m'apporte</h2>
-      <div class="apports">
-        <div class="apport-card">
-          <div class="apport-num">01</div>
-          <h4>Vision professionnelle</h4>
-          <p>Comprendre les enjeux réels derrière la donnée, au-delà des cas d'école.</p>
+        <div class="coming-card">
+          <div class="coming-card-icon">🛠️</div>
+          <h4>Compétences apportées</h4>
+          <p>Python, SQL, R, analyse exploratoire, visualisation de données — acquis en 1ère année de BUT SD.</p>
         </div>
-        <div class="apport-card">
-          <div class="apport-num">02</div>
-          <h4>Compétences techniques</h4>
-          <p>Utilisation quotidienne d'outils concrets dans un environnement de production.</p>
-        </div>
-        <div class="apport-card">
-          <div class="apport-num">03</div>
-          <h4>Savoir-être</h4>
-          <p>Communication, rigueur, adaptation à différents interlocuteurs et contextes.</p>
+        <div class="coming-card">
+          <div class="coming-card-icon">📍</div>
+          <h4>Mobilité</h4>
+          <p>Basé à Angoulême, ouvert aux opportunités en région Nouvelle-Aquitaine et au-delà.</p>
         </div>
       </div>
     </div>
@@ -143,3 +151,4 @@
   <script src="main.js"></script>
 </body>
 </html>
+ENDOFFILE
