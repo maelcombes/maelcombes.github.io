@@ -8,11 +8,84 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Bouton visualisation ── */
+    .btn-view {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .5rem 1.1rem; border-radius: 5px; margin-top: .75rem;
+      font-family: var(--font-display); font-size: .78rem; font-weight: 500;
+      letter-spacing: .04em; border: 1px solid var(--border);
+      color: var(--muted); background: var(--bg-hover);
+      transition: border-color .2s, color .2s, background .2s; cursor: none;
+    }
+    .btn-view:hover { border-color: var(--accent); color: var(--accent); background: rgba(79,142,247,.07); }
+    .btn-view .view-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+    /* ── Tooltip contact ── */
+    .contact-tooltip {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--bg-card); border: 1px solid var(--accent);
+      border-radius: 10px; padding: 1rem 1.25rem;
+      font-family: var(--font-display); font-size: .88rem;
+      color: var(--text); z-index: 9000;
+      box-shadow: 0 8px 32px rgba(79,142,247,.15);
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .25s, transform .25s;
+      pointer-events: none; max-width: 260px;
+    }
+    .contact-tooltip.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .contact-tooltip .ct-label { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
+    .contact-tooltip .ct-value { font-weight: 600; font-size: 1rem; color: var(--text); }
+    .contact-tooltip .ct-close {
+      position: absolute; top: .6rem; right: .75rem;
+      background: none; border: none; color: var(--muted);
+      font-size: 1rem; cursor: none; transition: color .2s;
+    }
+    .contact-tooltip .ct-close:hover { color: var(--text); }
+
+    /* ── Grille projets full width ── */
+    .projects-grid-full { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media(max-width:700px){ .projects-grid-full { grid-template-columns:1fr; } }
+
+    /* ── Carte projet enrichie ── */
+    .proj-card-full {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.75rem;
+      display: flex; flex-direction: column; gap: .7rem;
+      transition: border-color .25s, transform .25s;
+    }
+    .proj-card-full:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .proj-card-full .proj-head { display: flex; justify-content: space-between; align-items: flex-start; }
+    .proj-card-full .proj-icon { font-size: 1.75rem; }
+    .proj-card-full h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
+    .proj-card-full .proj-context { font-size: .73rem; color: var(--accent); letter-spacing: .04em; }
+    .proj-card-full p.desc { font-size: .85rem; color: var(--muted); line-height: 1.7; flex:1; }
+    .proj-card-full ul.proj-details {
+      list-style: none; display: flex; flex-direction: column; gap: .4rem; margin: .25rem 0;
+    }
+    .proj-card-full ul.proj-details li {
+      font-size: .82rem; color: var(--muted); padding-left: 1rem; position: relative; line-height: 1.55;
+    }
+    .proj-card-full ul.proj-details li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: .75rem; }
+    .proj-card-full .proj-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-top: .25rem; }
+    .proj-card-full .proj-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+  </style>
 </head>
 <body>
 
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
+
+  <!-- Tooltip contact -->
+  <div class="contact-tooltip" id="contactTooltip">
+    <button class="ct-close" id="tooltipClose">✕</button>
+    <p class="ct-label" id="tooltipLabel">—</p>
+    <p class="ct-value" id="tooltipValue">—</p>
+  </div>
 
   <header id="navbar">
     <a href="index.html" class="nav-logo">Maël Combes Peirache</a>
@@ -35,145 +108,185 @@
       <h1 class="page-title">Mes projets</h1>
       <div class="divider"></div>
       <p class="lead">
-        Voici les projets réalisés dans le cadre de mon BUT Science des Données.
-        Chacun m'a permis de mobiliser des compétences techniques et transversales
-        sur des problématiques concrètes et variées — logistique, immobilier, finance, géographie.
+        Voici les projets réalisés au cours de ma 1ère année de BUT Science des Données.
+        Ils couvrent des domaines variés — logistique, immobilier, gestion, géographie et finance —
+        et m'ont permis de mobiliser des compétences aussi bien techniques que transversales.
       </p>
     </div>
 
-    <!-- ══ PROJET PHARE : GreenSD ══ -->
-    <div class="project-featured reveal">
-      <span class="pf-label">✦ Projet SAÉ principal</span>
-      <span class="pf-icon">🌿</span>
-      <h2 class="pf-title">GreenSD — Optimisation logistique pour une entreprise responsable</h2>
-      <p class="pf-desc">
-        Dans le cadre d'une SAÉ, nous avons travaillé avec GreenSD, une entreprise fictive
-        engagée dans une démarche écoresponsable. L'objectif était d'analyser et d'optimiser
-        ses flux logistiques à partir de données réelles : volumes transportés, distances,
-        coûts et émissions carbone. Après une phase d'exploration et de nettoyage des données,
-        nous avons modélisé différents scénarios d'optimisation et produit des visualisations
-        claires pour aider à la prise de décision. Ce projet m'a appris à articuler une
-        démarche data complète — de la collecte à la restitution — dans un contexte métier précis.
-      </p>
-      <div class="pf-footer">
-        <div class="pf-tags">
-          <span class="tag">Python</span>
-          <span class="tag">Pandas</span>
-          <span class="tag">Matplotlib</span>
-          <span class="tag">SAÉ</span>
-          <span class="tag">Travail en équipe</span>
+    <div class="section-block projects-grid-full">
+
+      <!-- ── GreenSD ── -->
+      <div class="proj-card-full reveal">
+        <div class="proj-head">
+          <span class="proj-icon">🌿</span>
         </div>
-      </div>
-    </div>
-
-    <!-- ══ GRILLE DES AUTRES PROJETS ══ -->
-    <div class="section-block reveal">
-      <h2>Autres projets</h2>
-      <div class="projects-grid">
-
-        <!-- Régression linéaire valeurs foncières -->
-        <div class="proj-card">
-          <div class="proj-head">
-            <span class="proj-icon">🏠</span>
-            <a href="#" class="proj-link">↗</a>
-          </div>
-          <h3>Prédiction de prix immobiliers par régression</h3>
-          <p class="proj-context">📚 Statistiques & Modélisation · Semestre 2</p>
-          <p>
-            À partir de données publiques sur les transactions immobilières françaises,
-            nous avons construit un modèle de régression linéaire permettant d'estimer
-            la valeur d'un bien en fonction de ses caractéristiques : surface, localisation,
-            nombre de pièces. Ce projet a été l'occasion de travailler sur le prétraitement
-            des données, le choix des variables explicatives et l'évaluation de la qualité
-            du modèle via des indicateurs statistiques.
-          </p>
+        <h3>GreenSD — Application de gestion logistique écologique</h3>
+        <p class="proj-context">📚 Bases de données & Programmation · SAÉ</p>
+        <p class="desc">
+          Réalisé en binôme, ce projet consistait à concevoir une application complète
+          pour une entreprise de livraison engagée dans une démarche environnementale.
+          Nous avons importé et structuré des données brutes au format CSV dans une base
+          MySQL, puis développé une interface graphique en Python permettant d'interagir
+          avec cette base : visualisation des tables, saisie de nouvelles entrées, exécution
+          de requêtes. L'application assure le suivi des livraisons, des véhicules propres,
+          des tournées et des émissions CO₂ estimées, avec un chatbot intégré pour
+          accompagner l'utilisateur dans ses actions.
+        </p>
+        <ul class="proj-details">
+          <li>Import et nettoyage de fichiers CSV vers une base MySQL</li>
+          <li>Interface graphique Python : consultation, insertion, requêtes</li>
+          <li>Suivi des émissions CO₂ et des tournées de livraison</li>
+          <li>Chatbot intégré pour guider l'utilisateur</li>
+        </ul>
+        <div class="proj-footer">
           <div class="proj-tags">
             <span class="tag">Python</span>
-            <span class="tag">Régression linéaire</span>
-            <span class="tag">Scikit-learn</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">CSV</span>
+            <span class="tag">Interface graphique</span>
           </div>
+          <a href="#" class="btn-view"><span class="view-dot"></span> Voir le projet</a>
         </div>
+      </div>
 
-        <!-- Tableau gestionnaire de notes -->
-        <div class="proj-card">
-          <div class="proj-head">
-            <span class="proj-icon">📋</span>
-            <a href="#" class="proj-link">↗</a>
+      <!-- ── Régression immobilière ── -->
+      <div class="proj-card-full reveal">
+        <div class="proj-head">
+          <span class="proj-icon">🏠</span>
+        </div>
+        <h3>Estimation immobilière par régression linéaire</h3>
+        <p class="proj-context">📚 Statistiques & Modélisation · Semestre 2</p>
+        <p class="desc">
+          Ce projet avait pour objectif de modéliser le prix des logements sur le marché
+          niortais à partir de plusieurs variables explicatives : surface habitable, nombre
+          de pièces, localisation et type de bien. Entièrement réalisé sous R, nous avons
+          calculé manuellement les coefficients de régression par la méthode des moindres
+          carrés ordinaires, évalué la qualité du modèle via le coefficient de détermination R²
+          et produit un fichier CSV exportable regroupant les estimations de prix. 
+          Une approche rigoureuse qui m'a permis de comprendre en profondeur les fondements
+          statistiques de la régression.
+        </p>
+        <ul class="proj-details">
+          <li>Construction d'un modèle de régression linéaire multiple sous R</li>
+          <li>Calcul des coefficients par moindres carrés, évaluation par R²</li>
+          <li>Variables : surface, nombre de pièces, localisation, type de bien</li>
+          <li>Export des prédictions au format CSV</li>
+        </ul>
+        <div class="proj-footer">
+          <div class="proj-tags">
+            <span class="tag">R / RStudio</span>
+            <span class="tag">Régression linéaire</span>
+            <span class="tag">Statistiques</span>
+            <span class="tag">CSV</span>
           </div>
-          <h3>Gestionnaire de notes sous tableur</h3>
-          <p class="proj-context">📚 Outils bureautiques & Excel · Semestre 1</p>
-          <p>
-            Conception d'un tableau de bord complet sous Excel permettant de saisir,
-            organiser et visualiser les résultats académiques d'un groupe d'étudiants.
-            Le fichier intègre des formules avancées, des mises en forme conditionnelles
-            et des graphiques dynamiques. Ce projet m'a permis de maîtriser les fonctions
-            essentielles d'un tableur dans un contexte de gestion de données structurées.
-          </p>
+          <a href="#" class="btn-view"><span class="view-dot"></span> Voir le projet</a>
+        </div>
+      </div>
+
+      <!-- ── Gestionnaire de notes ── -->
+      <div class="proj-card-full reveal">
+        <div class="proj-head">
+          <span class="proj-icon">📋</span>
+        </div>
+        <h3>Gestionnaire de notes — Excel & VBA</h3>
+        <p class="proj-context">📚 Outils bureautiques · Semestre 1</p>
+        <p class="desc">
+          Développement d'un outil de gestion académique sous Excel, enrichi de macros
+          VBA pour automatiser les traitements. L'interface permet à l'utilisateur de
+          saisir, modifier et supprimer des notes via des formulaires interactifs, tandis
+          qu'un tableau de bord récapitulatif offre une vue d'ensemble des résultats :
+          moyennes par matière, évolutions et indicateurs de réussite. Ce projet m'a
+          initié à la logique de programmation événementielle et à la création
+          d'outils métier accessibles sans compétence technique.
+        </p>
+        <ul class="proj-details">
+          <li>Interface utilisateur avec formulaires VBA (saisie, modification, suppression)</li>
+          <li>Tableau récapitulatif avec calcul automatique des moyennes</li>
+          <li>Mise en forme conditionnelle et graphiques dynamiques</li>
+        </ul>
+        <div class="proj-footer">
           <div class="proj-tags">
             <span class="tag">Excel</span>
-            <span class="tag">Tableaux croisés</span>
-            <span class="tag">Visualisation</span>
+            <span class="tag">VBA</span>
+            <span class="tag">Automatisation</span>
           </div>
+          <a href="#" class="btn-view"><span class="view-dot"></span> Voir le projet</a>
         </div>
+      </div>
 
-        <!-- Cergy & ville jumelée -->
-        <div class="proj-card">
-          <div class="proj-head">
-            <span class="proj-icon">🌍</span>
-            <a href="#" class="proj-link">↗</a>
-          </div>
-          <h3>Cergy et Columbia — Analyse comparative de villes jumelées</h3>
-          <p class="proj-context">📚 Analyse de données géographiques · Semestre 2</p>
-          <p>
-            Ce projet consistait à comparer des indicateurs socio-économiques et démographiques
-            entre Cergy (France) et sa ville jumelée Columbia (États-Unis). En s'appuyant
-            sur des données publiques issues d'instituts statistiques nationaux (INSEE, US Census),
-            nous avons produit une analyse comparative illustrée de visualisations cartographiques
-            et de graphiques. Ce travail a mis en lumière les similitudes et divergences
-            entre ces deux territoires.
-          </p>
+      <!-- ── Cergy & Columbia ── -->
+      <div class="proj-card-full reveal">
+        <div class="proj-head">
+          <span class="proj-icon">🌍</span>
+        </div>
+        <h3>Cergy & Columbia — Présentation de villes jumelées</h3>
+        <p class="proj-context">📚 Communication & Anglais · Semestre 1</p>
+        <p class="desc">
+          Dans le cadre d'un exercice de communication bilingue, nous avons préparé et
+          présenté à l'oral un exposé comparant Cergy (France) et sa ville jumelée
+          Columbia (États-Unis). La présentation mêlait français et anglais, et abordait
+          des dimensions économiques et culturelles : tissu économique local, démographie,
+          vie associative, histoire et liens entre les deux villes. Ce projet a développé
+          ma capacité à structurer un discours clair, à m'exprimer dans les deux langues
+          et à vulgariser des données pour un public varié.
+        </p>
+        <ul class="proj-details">
+          <li>Présentation orale bilingue (français / anglais)</li>
+          <li>Analyse économique et culturelle comparative des deux villes</li>
+          <li>Structuration d'un argumentaire et travail en équipe</li>
+        </ul>
+        <div class="proj-footer">
           <div class="proj-tags">
-            <span class="tag">R</span>
-            <span class="tag">INSEE</span>
-            <span class="tag">Cartographie</span>
+            <span class="tag">Anglais</span>
+            <span class="tag">Présentation orale</span>
             <span class="tag">Analyse comparative</span>
           </div>
         </div>
+      </div>
 
-        <!-- Fleury Michon -->
-        <div class="proj-card">
-          <div class="proj-head">
-            <span class="proj-icon">📊</span>
-            <a href="#" class="proj-link">↗</a>
-          </div>
-          <h3>Analyse comptable — Fleury Michon</h3>
-          <p class="proj-context">📚 Gestion & Analyse financière · Semestre 1</p>
-          <p>
-            À partir des rapports financiers publics de Fleury Michon, nous avons conduit
-            une analyse des données comptables de l'entreprise sur plusieurs exercices :
-            évolution du chiffre d'affaires, marges, structure des charges et indicateurs
-            de performance. Les résultats ont été mis en forme dans un tableau de bord
-            Excel avec graphiques d'évolution, permettant d'identifier des tendances
-            clés sur la santé financière du groupe.
-          </p>
+      <!-- ── Fleury Michon ── -->
+      <div class="proj-card-full reveal" style="grid-column: 1 / -1;">
+        <div class="proj-head">
+          <span class="proj-icon">📊</span>
+        </div>
+        <h3>Analyse comptable — Groupe Fleury Michon</h3>
+        <p class="proj-context">📚 Gestion & Analyse financière · Semestre 1</p>
+        <p class="desc">
+          À partir des rapports financiers publics du groupe Fleury Michon, nous avons
+          mené une analyse comptable sur plusieurs exercices successifs. L'étude portait
+          sur l'évolution du chiffre d'affaires, la structure des charges, les marges
+          opérationnelles et les principaux ratios de performance financière.
+          Les résultats ont été restitués sous la forme d'un tableau de bord Excel
+          intégrant des graphiques d'évolution, permettant d'identifier les tendances
+          et d'émettre des observations sur la santé économique du groupe sur la période analysée.
+        </p>
+        <ul class="proj-details">
+          <li>Lecture et exploitation de rapports financiers annuels publics</li>
+          <li>Calcul de ratios : marge brute, résultat d'exploitation, évolution du CA</li>
+          <li>Tableau de bord Excel avec graphiques d'évolution pluriannuels</li>
+          <li>Restitution écrite des observations et conclusions</li>
+        </ul>
+        <div class="proj-footer">
           <div class="proj-tags">
             <span class="tag">Excel</span>
             <span class="tag">Analyse financière</span>
-            <span class="tag">Données comptables</span>
+            <span class="tag">Comptabilité</span>
+            <span class="tag">Données publiques</span>
           </div>
+          <a href="#" class="btn-view"><span class="view-dot"></span> Voir le projet</a>
         </div>
-
       </div>
-    </div>
 
+    </div>
   </main>
 
   <footer>
     <div class="footer-contact">
       <p class="footer-contact-title">CONTACT</p>
       <div class="footer-icons">
-        <a href="mailto:mael.combespeirache@example.com" class="footer-icon-btn" title="Email">✉</a>
-        <a href="tel:+33600000000" class="footer-icon-btn" title="Téléphone">📞</a>
+        <a href="#" class="footer-icon-btn" id="btnEmail" title="Email">✉</a>
+        <a href="#" class="footer-icon-btn" id="btnPhone" title="Téléphone">📞</a>
         <a href="https://www.linkedin.com/in/" target="_blank" class="footer-icon-btn" title="LinkedIn">in</a>
       </div>
     </div>
@@ -181,5 +294,32 @@
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    // ── Tooltip contact ──
+    const tooltip   = document.getElementById('contactTooltip');
+    const tlLabel   = document.getElementById('tooltipLabel');
+    const tlValue   = document.getElementById('tooltipValue');
+    const tlClose   = document.getElementById('tooltipClose');
+
+    function showTooltip(label, value) {
+      tlLabel.textContent = label;
+      tlValue.textContent = value;
+      tooltip.classList.add('show');
+    }
+
+    document.getElementById('btnEmail').addEventListener('click', e => {
+      e.preventDefault();
+      showTooltip('Adresse e-mail', 'maelcombesp@gmail.com');
+    });
+    document.getElementById('btnPhone').addEventListener('click', e => {
+      e.preventDefault();
+      showTooltip('Numéro de téléphone', '07 66 12 16 16');
+    });
+    tlClose.addEventListener('click', () => tooltip.classList.remove('show'));
+    document.addEventListener('click', e => {
+      if (!tooltip.contains(e.target) && e.target.id !== 'btnEmail' && e.target.id !== 'btnPhone')
+        tooltip.classList.remove('show');
+    });
+  </script>
 </body>
 </html>
