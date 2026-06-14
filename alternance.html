@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -95,6 +95,7 @@
       <a href="apropos.html">À propos</a>
       <a href="alternance.html" class="active">Alternance</a>
       <a href="projets.html">Projets</a>
+      <a href="bilan.html">Bilan</a>
     </nav>
     <button class="nav-burger" id="burger" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -143,11 +144,19 @@
 
   </main>
 
-  <footer>
-    <p>Conçu par <span>Maël Combes Peirache</span> · <span id="year"></span></p>
+    <footer>
+    <div class="footer-contact">
+      <p class="footer-contact-title">CONTACT</p>
+      <div class="footer-icons">
+        <a href="mailto:mael.combespeirache@example.com" class="footer-icon-btn" title="Email">✉</a>
+        <a href="tel:+33600000000" class="footer-icon-btn" title="Téléphone">📞</a>
+        <a href="https://www.linkedin.com/in/" target="_blank" class="footer-icon-btn" title="LinkedIn">in</a>
+      </div>
+      <p class="footer-formation">BUT <span>Science des Données</span></p>
+    </div>
+    <p class="footer-copy">&copy; <span id="year"></span> Maël Combes Peirache &middot; BUT Science des Données</p>
   </footer>
 
   <script src="main.js"></script>
 </body>
 </html>
-ENDOFFILE
