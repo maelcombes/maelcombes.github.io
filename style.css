@@ -156,11 +156,36 @@ body.cursor-grow #cursor-ring { width: 52px; height: 52px; opacity: .18; }
    FOOTER
 ──────────────────────────────────────────────── */
 footer {
-  text-align: center; padding: 2.5rem 1rem;
   border-top: 1px solid var(--border);
-  font-size: .8rem; color: var(--muted);
+  padding: 3rem 2rem 2rem;
+  text-align: center;
 }
-footer span { color: var(--accent); }
+.footer-contact { margin-bottom: 1.5rem; }
+.footer-contact-title {
+  font-family: var(--font-display); font-size: .7rem;
+  font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 1rem;
+}
+.footer-icons {
+  display: flex; align-items: center; justify-content: center; gap: .75rem;
+  margin-bottom: 1.25rem;
+}
+.footer-icon-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--bg-card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; font-weight: 700; color: var(--muted);
+  transition: border-color .2s, color .2s, transform .2s; cursor: none;
+  font-family: var(--font-display);
+}
+.footer-icon-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.footer-formation {
+  font-family: var(--font-display); font-size: .95rem; font-weight: 700;
+  color: var(--text); margin-bottom: .25rem;
+}
+.footer-formation span { color: var(--accent); }
+.footer-copy { font-size: .75rem; color: var(--muted); }
+.footer-copy span { color: var(--accent); }
 
 /* ════════════════════════════════════════════════
    INDEX — HERO
@@ -382,6 +407,66 @@ footer span { color: var(--accent); }
 .proj-context { font-size: .73rem; color: var(--accent); letter-spacing: .04em; }
 .proj-card > p { font-size: .85rem; color: var(--muted); flex: 1; line-height: 1.65; }
 .proj-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .25rem; }
+
+/* ────────────────────────────────────────────────
+   PASSIONS (apropos)
+──────────────────────────────────────────────── */
+.passions-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.5rem;
+}
+.passion-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.5rem; display: flex; flex-direction: column; gap: .5rem;
+  transition: border-color .2s, transform .2s;
+}
+.passion-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.passion-icon { font-size: 1.75rem; }
+.passion-card h4 { font-family: var(--font-display); font-size: .95rem; font-weight: 600; }
+.passion-card p  { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+/* ────────────────────────────────────────────────
+   BILAN
+──────────────────────────────────────────────── */
+.bilan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: .5rem; }
+.bilan-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.5rem;
+}
+.bilan-positif { border-color: rgba(79,142,247,.3); }
+.bilan-negatif { border-color: rgba(139,92,246,.3); }
+.bilan-card-header { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
+.bilan-icon { font-size: 1.25rem; }
+.bilan-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
+.bilan-list { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+.bilan-list li {
+  font-size: .85rem; color: var(--muted); line-height: 1.6;
+  padding-left: 1rem; position: relative;
+}
+.bilan-list li::before { content: '–'; position: absolute; left: 0; color: var(--accent); }
+
+.bilan-competences { display: flex; flex-direction: column; gap: 1rem; }
+.bilan-comp-item {
+  display: flex; gap: 1.1rem; align-items: flex-start;
+  padding: 1.1rem 1.25rem; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: 8px; transition: border-color .2s;
+}
+.bilan-comp-item:hover { border-color: var(--accent); }
+.bilan-comp-icon { font-size: 1.3rem; flex-shrink: 0; }
+.bilan-comp-item h4 { font-family: var(--font-display); font-size: .9rem; font-weight: 600; margin-bottom: .2rem; }
+.bilan-comp-item p  { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+.objectifs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-top: 2rem; }
+.objectif-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.5rem; transition: border-color .2s;
+}
+.objectif-card:hover { border-color: var(--accent); }
+.objectif-num {
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: 700;
+  color: var(--border); line-height: 1; margin-bottom: .6rem; display: block;
+}
+.objectif-card h4 { font-family: var(--font-display); font-size: .9rem; font-weight: 600; margin-bottom: .4rem; }
+.objectif-card p  { font-size: .82rem; color: var(--muted); line-height: 1.65; }
 
 /* ────────────────────────────────────────────────
    KEYFRAMES
