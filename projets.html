@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html = f'''<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -10,23 +10,54 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     /* ── Bouton visualisation ── */
-    .btn-view {
+    .btn-view {{
       display: inline-flex; align-items: center; gap: .45rem;
       padding: .5rem 1.1rem; border-radius: 5px; margin-top: .75rem;
       font-family: var(--font-display); font-size: .78rem; font-weight: 500;
       letter-spacing: .04em; border: 1px solid var(--border);
       color: var(--muted); background: var(--bg-hover);
       transition: border-color .2s, color .2s, background .2s; cursor: none;
-    }
-    .btn-view:hover { border-color: var(--accent); color: var(--accent); background: rgba(79,142,247,.07); }
-    .btn-view .view-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+    }}
+    .btn-view:hover {{ border-color: var(--accent); color: var(--accent); background: rgba(79,142,247,.07); }}
+    .btn-view .vdot {{
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink:0;
       animation: pulse 1.8s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+    }}
+    @keyframes pulse {{ 0%,100%{{opacity:1;transform:scale(1)}} 50%{{opacity:.4;transform:scale(.7)}} }}
+
+    /* ── MODALE ── */
+    .modal-overlay {{
+      position: fixed; inset: 0; background: rgba(0,0,0,.75);
+      z-index: 8000; display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .25s;
+      backdrop-filter: blur(4px);
+    }}
+    .modal-overlay.open {{ opacity: 1; pointer-events: auto; }}
+    .modal-box {{
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 2rem; max-width: 820px; width: 92%;
+      max-height: 88vh; overflow-y: auto;
+      transform: translateY(16px) scale(.97);
+      transition: transform .28s cubic-bezier(.16,1,.3,1);
+    }}
+    .modal-overlay.open .modal-box {{ transform: translateY(0) scale(1); }}
+    .modal-header {{ display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; gap: 1rem; }}
+    .modal-title {{ font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; }}
+    .modal-close {{
+      background: none; border: 1px solid var(--border); border-radius: 50%;
+      width: 32px; height: 32px; color: var(--muted); font-size: 1rem;
+      cursor: none; transition: border-color .2s, color .2s; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+    }}
+    .modal-close:hover {{ border-color: var(--accent); color: var(--accent); }}
+    .modal-caption {{
+      font-size: .82rem; color: var(--muted); line-height: 1.7;
+      margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+    }}
+    .modal-img {{ width: 100%; border-radius: 8px; border: 1px solid var(--border); display: block; }}
 
     /* ── Tooltip contact ── */
-    .contact-tooltip {
+    .contact-tooltip {{
       position: fixed; bottom: 2rem; right: 2rem;
       background: var(--bg-card); border: 1px solid var(--accent);
       border-radius: 10px; padding: 1rem 1.25rem;
@@ -36,43 +67,43 @@
       opacity: 0; transform: translateY(8px);
       transition: opacity .25s, transform .25s;
       pointer-events: none; max-width: 260px;
-    }
-    .contact-tooltip.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    .contact-tooltip .ct-label { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
-    .contact-tooltip .ct-value { font-weight: 600; font-size: 1rem; color: var(--text); }
-    .contact-tooltip .ct-close {
+    }}
+    .contact-tooltip.show {{ opacity: 1; transform: translateY(0); pointer-events: auto; }}
+    .contact-tooltip .ct-label {{ font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }}
+    .contact-tooltip .ct-value {{ font-weight: 600; font-size: 1rem; color: var(--text); }}
+    .contact-tooltip .ct-close {{
       position: absolute; top: .6rem; right: .75rem;
       background: none; border: none; color: var(--muted);
       font-size: 1rem; cursor: none; transition: color .2s;
-    }
-    .contact-tooltip .ct-close:hover { color: var(--text); }
+    }}
+    .contact-tooltip .ct-close:hover {{ color: var(--text); }}
 
-    /* ── Grille projets full width ── */
-    .projects-grid-full { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    @media(max-width:700px){ .projects-grid-full { grid-template-columns:1fr; } }
+    /* ── Grille projets ── */
+    .projects-grid-full {{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }}
+    @media(max-width:700px){{ .projects-grid-full {{ grid-template-columns:1fr; }} }}
 
-    /* ── Carte projet enrichie ── */
-    .proj-card-full {
+    .proj-card-full {{
       background: var(--bg-card); border: 1px solid var(--border);
       border-radius: 10px; padding: 1.75rem;
       display: flex; flex-direction: column; gap: .7rem;
       transition: border-color .25s, transform .25s;
-    }
-    .proj-card-full:hover { border-color: var(--accent); transform: translateY(-4px); }
-    .proj-card-full .proj-head { display: flex; justify-content: space-between; align-items: flex-start; }
-    .proj-card-full .proj-icon { font-size: 1.75rem; }
-    .proj-card-full h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
-    .proj-card-full .proj-context { font-size: .73rem; color: var(--accent); letter-spacing: .04em; }
-    .proj-card-full p.desc { font-size: .85rem; color: var(--muted); line-height: 1.7; flex:1; }
-    .proj-card-full ul.proj-details {
+    }}
+    .proj-card-full:hover {{ border-color: var(--accent); transform: translateY(-4px); }}
+    .proj-card-full .proj-head {{ display: flex; justify-content: space-between; align-items: flex-start; }}
+    .proj-card-full .proj-icon {{ font-size: 1.75rem; }}
+    .proj-card-full h3 {{ font-family: var(--font-display); font-size: 1rem; font-weight: 600; }}
+    .proj-card-full .proj-context {{ font-size: .73rem; color: var(--accent); letter-spacing: .04em; }}
+    .proj-card-full p.desc {{ font-size: .85rem; color: var(--muted); line-height: 1.7; flex:1; }}
+    .proj-card-full ul.proj-details {{
       list-style: none; display: flex; flex-direction: column; gap: .4rem; margin: .25rem 0;
-    }
-    .proj-card-full ul.proj-details li {
+    }}
+    .proj-card-full ul.proj-details li {{
       font-size: .82rem; color: var(--muted); padding-left: 1rem; position: relative; line-height: 1.55;
-    }
-    .proj-card-full ul.proj-details li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: .75rem; }
-    .proj-card-full .proj-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-top: .25rem; }
-    .proj-card-full .proj-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+    }}
+    .proj-card-full ul.proj-details li::before {{ content: '→'; position: absolute; left: 0; color: var(--accent); font-size: .75rem; }}
+    .proj-card-full .proj-footer {{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-top: .25rem; }}
+    .proj-card-full .proj-tags {{ display: flex; flex-wrap: wrap; gap: .35rem; }}
+    .proj-full-width {{ grid-column: 1 / -1; }}
   </style>
 </head>
 <body>
@@ -85,6 +116,53 @@
     <button class="ct-close" id="tooltipClose">✕</button>
     <p class="ct-label" id="tooltipLabel">—</p>
     <p class="ct-value" id="tooltipValue">—</p>
+  </div>
+
+  <!-- MODALE GreenSD -->
+  <div class="modal-overlay" id="modal-greensd">
+    <div class="modal-box">
+      <div class="modal-header">
+        <p class="modal-title">🌿 GreenSD — Interface graphique</p>
+        <button class="modal-close" data-close="modal-greensd">✕</button>
+      </div>
+      <img class="modal-img" src="data:image/jpeg;base64,{b64_green}" alt="Interface GreenSD" />
+      <p class="modal-caption">
+        Voici l'interface graphique que nous avons développée lors de la réalisation de ce projet.
+        Elle permet de naviguer entre les différentes fonctionnalités de l'application :
+        visualisation des tables, insertion de données, exécution de requêtes SQL et accès à l'assistant IA intégré.
+      </p>
+    </div>
+  </div>
+
+  <!-- MODALE Régression -->
+  <div class="modal-overlay" id="modal-regression">
+    <div class="modal-box">
+      <div class="modal-header">
+        <p class="modal-title">🏠 Régression linéaire — Aperçu du rapport</p>
+        <button class="modal-close" data-close="modal-regression">✕</button>
+      </div>
+      <img class="modal-img" src="data:image/jpeg;base64,{b64_reg}" alt="Rapport régression linéaire" />
+      <p class="modal-caption">
+        Aperçu de notre rapport méthodologique : nous y détaillons la construction du modèle de régression,
+        le choix des variables, le calcul des coefficients par moindres carrés et l'évaluation des résultats via le R².
+      </p>
+    </div>
+  </div>
+
+  <!-- MODALE Gestionnaire de notes -->
+  <div class="modal-overlay" id="modal-notes">
+    <div class="modal-box">
+      <div class="modal-header">
+        <p class="modal-title">📋 Gestionnaire de notes — Interface utilisateur</p>
+        <button class="modal-close" data-close="modal-notes">✕</button>
+      </div>
+      <img class="modal-img" src="data:image/jpeg;base64,{b64_notes}" alt="Interface gestionnaire de notes" />
+      <p class="modal-caption">
+        Voici l'interface utilisateur proposée à la fin du projet. Elle permet d'ajouter, modifier ou supprimer
+        des notes, de consulter le relevé et le tableau de bord, et de gérer les absences — le tout
+        depuis un fichier Excel enrichi de macros VBA.
+      </p>
+    </div>
   </div>
 
   <header id="navbar">
@@ -116,11 +194,9 @@
 
     <div class="section-block projects-grid-full">
 
-      <!-- ── GreenSD ── -->
+      <!-- GreenSD -->
       <div class="proj-card-full reveal">
-        <div class="proj-head">
-          <span class="proj-icon">🌿</span>
-        </div>
+        <div class="proj-head"><span class="proj-icon">🌿</span></div>
         <h3>GreenSD — Application de gestion logistique écologique</h3>
         <p class="proj-context">📚 Bases de données & Programmation · SAÉ</p>
         <p class="desc">
@@ -135,7 +211,7 @@
         </p>
         <ul class="proj-details">
           <li>Import et nettoyage de fichiers CSV vers une base MySQL</li>
-          <li>Interface graphique Python : consultation, insertion, requêtes</li>
+          <li>Interface graphique Python : consultation, insertion, requêtes SQL</li>
           <li>Suivi des émissions CO₂ et des tournées de livraison</li>
           <li>Chatbot intégré pour guider l'utilisateur</li>
         </ul>
@@ -146,15 +222,13 @@
             <span class="tag">CSV</span>
             <span class="tag">Interface graphique</span>
           </div>
-          <a href="#" class="btn-view"><span class="view-dot"></span> Voir le projet</a>
+          <button class="btn-view" data-modal="modal-greensd"><span class="vdot"></span> Voir le projet</button>
         </div>
       </div>
 
-      <!-- ── Régression immobilière ── -->
+      <!-- Régression -->
       <div class="proj-card-full reveal">
-        <div class="proj-head">
-          <span class="proj-icon">🏠</span>
-        </div>
+        <div class="proj-head"><span class="proj-icon">🏠</span></div>
         <h3>Estimation immobilière par régression linéaire</h3>
         <p class="proj-context">📚 Statistiques & Modélisation · Semestre 2</p>
         <p class="desc">
@@ -162,10 +236,8 @@
           niortais à partir de plusieurs variables explicatives : surface habitable, nombre
           de pièces, localisation et type de bien. Entièrement réalisé sous R, nous avons
           calculé manuellement les coefficients de régression par la méthode des moindres
-          carrés ordinaires, évalué la qualité du modèle via le coefficient de détermination R²
-          et produit un fichier CSV exportable regroupant les estimations de prix. 
-          Une approche rigoureuse qui m'a permis de comprendre en profondeur les fondements
-          statistiques de la régression.
+          carrés ordinaires, évalué la qualité du modèle via le coefficient R²
+          et produit un fichier CSV exportable regroupant les estimations de prix.
         </p>
         <ul class="proj-details">
           <li>Construction d'un modèle de régression linéaire multiple sous R</li>
@@ -178,17 +250,14 @@
             <span class="tag">R / RStudio</span>
             <span class="tag">Régression linéaire</span>
             <span class="tag">Statistiques</span>
-            <span class="tag">CSV</span>
           </div>
-          <a href="#" class="btn-view"><span class="view-dot"></span> Voir le projet</a>
+          <button class="btn-view" data-modal="modal-regression"><span class="vdot"></span> Voir le projet</button>
         </div>
       </div>
 
-      <!-- ── Gestionnaire de notes ── -->
+      <!-- Gestionnaire de notes -->
       <div class="proj-card-full reveal">
-        <div class="proj-head">
-          <span class="proj-icon">📋</span>
-        </div>
+        <div class="proj-head"><span class="proj-icon">📋</span></div>
         <h3>Gestionnaire de notes — Excel & VBA</h3>
         <p class="proj-context">📚 Outils bureautiques · Semestre 1</p>
         <p class="desc">
@@ -196,14 +265,12 @@
           VBA pour automatiser les traitements. L'interface permet à l'utilisateur de
           saisir, modifier et supprimer des notes via des formulaires interactifs, tandis
           qu'un tableau de bord récapitulatif offre une vue d'ensemble des résultats :
-          moyennes par matière, évolutions et indicateurs de réussite. Ce projet m'a
-          initié à la logique de programmation événementielle et à la création
-          d'outils métier accessibles sans compétence technique.
+          moyennes par matière, suivi des absences et indicateurs de réussite.
         </p>
         <ul class="proj-details">
-          <li>Interface utilisateur avec formulaires VBA (saisie, modification, suppression)</li>
+          <li>Interface utilisateur avec formulaires VBA (ajout, modification, suppression)</li>
           <li>Tableau récapitulatif avec calcul automatique des moyennes</li>
-          <li>Mise en forme conditionnelle et graphiques dynamiques</li>
+          <li>Gestion des absences et décision du jury intégrées</li>
         </ul>
         <div class="proj-footer">
           <div class="proj-tags">
@@ -211,15 +278,13 @@
             <span class="tag">VBA</span>
             <span class="tag">Automatisation</span>
           </div>
-          <a href="#" class="btn-view"><span class="view-dot"></span> Voir le projet</a>
+          <button class="btn-view" data-modal="modal-notes"><span class="vdot"></span> Voir le projet</button>
         </div>
       </div>
 
-      <!-- ── Cergy & Columbia ── -->
+      <!-- Cergy & Columbia -->
       <div class="proj-card-full reveal">
-        <div class="proj-head">
-          <span class="proj-icon">🌍</span>
-        </div>
+        <div class="proj-head"><span class="proj-icon">🌍</span></div>
         <h3>Cergy & Columbia — Présentation de villes jumelées</h3>
         <p class="proj-context">📚 Communication & Anglais · Semestre 1</p>
         <p class="desc">
@@ -227,14 +292,12 @@
           présenté à l'oral un exposé comparant Cergy (France) et sa ville jumelée
           Columbia (États-Unis). La présentation mêlait français et anglais, et abordait
           des dimensions économiques et culturelles : tissu économique local, démographie,
-          vie associative, histoire et liens entre les deux villes. Ce projet a développé
-          ma capacité à structurer un discours clair, à m'exprimer dans les deux langues
-          et à vulgariser des données pour un public varié.
+          vie associative, histoire et liens entre les deux villes.
         </p>
         <ul class="proj-details">
           <li>Présentation orale bilingue (français / anglais)</li>
           <li>Analyse économique et culturelle comparative des deux villes</li>
-          <li>Structuration d'un argumentaire et travail en équipe</li>
+          <li>Structuration d'un argumentaire et prise de parole en public</li>
         </ul>
         <div class="proj-footer">
           <div class="proj-tags">
@@ -245,11 +308,44 @@
         </div>
       </div>
 
-      <!-- ── Fleury Michon ── -->
-      <div class="proj-card-full reveal" style="grid-column: 1 / -1;">
-        <div class="proj-head">
-          <span class="proj-icon">📊</span>
+      <!-- Analyse Qualyse — pleine largeur -->
+      <div class="proj-card-full proj-full-width reveal">
+        <div class="proj-head"><span class="proj-icon">🧬</span></div>
+        <h3>Analyse de données, reporting et datavisualisation — Qualyse</h3>
+        <p class="proj-context">📚 Analyse de données & Méthodes agiles · SAÉ</p>
+        <p class="desc">
+          Mené en équipe pour le laboratoire d'analyses sanitaires Qualyse, ce projet
+          visait à construire un outil interactif d'exploration et de visualisation des
+          résultats de dépistage PCR réalisés sur des élevages des Deux-Sèvres et de la
+          Vienne. À partir d'un historique de données couvrant plusieurs années, nous avons
+          mis en place un système de classification des cheptels selon leur statut
+          sanitaire longitudinal, calculé des indicateurs de suivi — proportion de cheptels
+          négatifs par session, évolution dans le temps — et répondu à des questions
+          statistiques liées aux campagnes de dépistage. L'outil intègre un tableau de bord
+          dynamique et peut absorber de nouveaux jeux de données sans modification du code.
+          Le projet a été conduit selon la méthode agile SCRUM, avec organisation en sprints,
+          tenue d'un backlog produit et suivi visuel via un tableau Kanban.
+        </p>
+        <ul class="proj-details">
+          <li>Classification longitudinale des cheptels selon leur statut PCR</li>
+          <li>Calcul d'indicateurs clés : évolution, proportions par session de dépistage</li>
+          <li>Tableau de bord interactif et dynamique, compatible avec de nouvelles données</li>
+          <li>Gestion de projet agile : SCRUM, sprints, backlog produit, suivi Kanban</li>
+        </ul>
+        <div class="proj-footer">
+          <div class="proj-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Datavisualisation</span>
+            <span class="tag">SCRUM / Agile</span>
+            <span class="tag">Tableau de bord</span>
+            <span class="tag">Données sanitaires</span>
+          </div>
         </div>
+      </div>
+
+      <!-- Fleury Michon — pleine largeur -->
+      <div class="proj-card-full proj-full-width reveal">
+        <div class="proj-head"><span class="proj-icon">📊</span></div>
         <h3>Analyse comptable — Groupe Fleury Michon</h3>
         <p class="proj-context">📚 Gestion & Analyse financière · Semestre 1</p>
         <p class="desc">
@@ -272,9 +368,7 @@
             <span class="tag">Excel</span>
             <span class="tag">Analyse financière</span>
             <span class="tag">Comptabilité</span>
-            <span class="tag">Données publiques</span>
           </div>
-          <a href="#" class="btn-view"><span class="view-dot"></span> Voir le projet</a>
         </div>
       </div>
 
@@ -295,31 +389,51 @@
 
   <script src="main.js"></script>
   <script>
-    // ── Tooltip contact ──
-    const tooltip   = document.getElementById('contactTooltip');
-    const tlLabel   = document.getElementById('tooltipLabel');
-    const tlValue   = document.getElementById('tooltipValue');
-    const tlClose   = document.getElementById('tooltipClose');
+    // Modales
+    document.querySelectorAll('[data-modal]').forEach(btn => {{
+      btn.addEventListener('click', () => {{
+        document.getElementById(btn.dataset.modal).classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }});
+    }});
+    document.querySelectorAll('[data-close]').forEach(btn => {{
+      btn.addEventListener('click', () => {{
+        document.getElementById(btn.dataset.close).classList.remove('open');
+        document.body.style.overflow = '';
+      }});
+    }});
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {{
+      overlay.addEventListener('click', e => {{
+        if (e.target === overlay) {{ overlay.classList.remove('open'); document.body.style.overflow = ''; }}
+      }});
+    }});
+    document.addEventListener('keydown', e => {{
+      if (e.key === 'Escape') {{
+        document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+        document.body.style.overflow = '';
+      }}
+    }});
 
-    function showTooltip(label, value) {
-      tlLabel.textContent = label;
-      tlValue.textContent = value;
+    // Tooltip contact
+    const tooltip = document.getElementById('contactTooltip');
+    const tlLabel = document.getElementById('tooltipLabel');
+    const tlValue = document.getElementById('tooltipValue');
+    const tlClose = document.getElementById('tooltipClose');
+    function showTooltip(label, value) {{
+      tlLabel.textContent = label; tlValue.textContent = value;
       tooltip.classList.add('show');
-    }
-
-    document.getElementById('btnEmail').addEventListener('click', e => {
-      e.preventDefault();
-      showTooltip('Adresse e-mail', 'maelcombesp@gmail.com');
-    });
-    document.getElementById('btnPhone').addEventListener('click', e => {
-      e.preventDefault();
-      showTooltip('Numéro de téléphone', '07 66 12 16 16');
-    });
+    }}
+    document.getElementById('btnEmail').addEventListener('click', e => {{ e.preventDefault(); showTooltip('Adresse e-mail', 'maelcombesp@gmail.com'); }});
+    document.getElementById('btnPhone').addEventListener('click', e => {{ e.preventDefault(); showTooltip('Numéro de téléphone', '07 66 12 16 16'); }});
     tlClose.addEventListener('click', () => tooltip.classList.remove('show'));
-    document.addEventListener('click', e => {
+    document.addEventListener('click', e => {{
       if (!tooltip.contains(e.target) && e.target.id !== 'btnEmail' && e.target.id !== 'btnPhone')
         tooltip.classList.remove('show');
-    });
+    }});
   </script>
 </body>
-</html>
+</html>'''
+
+open("/mnt/user-data/outputs/portfolio/projets.html", "w").write(html)
+print(f"projets.html généré — {len(html)} chars")
+EOF
