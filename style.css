@@ -198,6 +198,11 @@ footer {
   display: flex; align-items: center; gap: 2rem;
   margin-bottom: 2.5rem;
 }
+.hero-avatar-photo {
+  width: 88px; height: 88px; border-radius: 50%; flex-shrink: 0;
+  object-fit: cover; border: 2px solid var(--accent);
+  opacity: 0; animation: fadeUp .6s .2s forwards;
+}
 .hero-avatar {
   width: 88px; height: 88px; border-radius: 50%; flex-shrink: 0;
   background: var(--bg-card); border: 1px solid var(--border);
