@@ -171,10 +171,10 @@ footer {
   margin-bottom: 1.25rem;
 }
 .footer-icon-btn {
-  width: 40px; height: 40px; border-radius: 50%;
+  width: 52px; height: 52px; border-radius: 50%;
   border: 1px solid var(--border); background: var(--bg-card);
   display: flex; align-items: center; justify-content: center;
-  font-size: .85rem; font-weight: 700; color: var(--muted);
+  font-size: 1.1rem; font-weight: 700; color: var(--muted);
   transition: border-color .2s, color .2s, transform .2s; cursor: none;
   font-family: var(--font-display);
 }
@@ -407,6 +407,16 @@ footer {
 .proj-context { font-size: .73rem; color: var(--accent); letter-spacing: .04em; }
 .proj-card > p { font-size: .85rem; color: var(--muted); flex: 1; line-height: 1.65; }
 .proj-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .25rem; }
+
+.bilan-conclusion {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 2rem 2.25rem;
+}
+.bilan-conclusion h2 { margin-bottom: 1rem; }
+.bilan-conclusion .lead { margin-bottom: 0; }
 
 /* ────────────────────────────────────────────────
    PASSIONS (apropos)
