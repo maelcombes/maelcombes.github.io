@@ -8,8 +8,36 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .contact-tooltip {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--bg-card); border: 1px solid var(--accent);
+      border-radius: 10px; padding: 1rem 1.25rem;
+      font-family: var(--font-display); font-size: .88rem;
+      color: var(--text); z-index: 9000;
+      box-shadow: 0 8px 32px rgba(79,142,247,.15);
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .25s, transform .25s;
+      pointer-events: none; max-width: 260px;
+    }
+    .contact-tooltip.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .contact-tooltip .ct-label { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
+    .contact-tooltip .ct-value { font-weight: 600; font-size: 1rem; color: var(--text); }
+    .contact-tooltip .ct-close {
+      position: absolute; top: .6rem; right: .75rem;
+      background: none; border: none; color: var(--muted);
+      font-size: 1rem; cursor: none; transition: color .2s;
+    }
+    .contact-tooltip .ct-close:hover { color: var(--text); }
+  </style>
 </head>
 <body>
+  <!-- Tooltip contact -->
+  <div class="contact-tooltip" id="contactTooltip">
+    <button class="ct-close" id="tooltipClose">✕</button>
+    <p class="ct-label" id="tooltipLabel">—</p>
+    <p class="ct-value" id="tooltipValue">—</p>
+  </div>
 
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
@@ -87,12 +115,12 @@
 
   </main>
 
-  <footer>
+    <footer>
     <div class="footer-contact">
       <p class="footer-contact-title">CONTACT</p>
       <div class="footer-icons">
-        <a href="mailto:mael.combespeirache@example.com" class="footer-icon-btn" title="Email">✉</a>
-        <a href="tel:+33600000000" class="footer-icon-btn" title="Téléphone">📞</a>
+        <a href="#" class="footer-icon-btn" id="btnEmail" title="Email">✉</a>
+        <a href="#" class="footer-icon-btn" id="btnPhone" title="Téléphone">📞</a>
         <a href="https://www.linkedin.com/in/" target="_blank" class="footer-icon-btn" title="LinkedIn">in</a>
       </div>
     </div>
@@ -100,5 +128,22 @@
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    const tooltip = document.getElementById('contactTooltip');
+    const tlLabel = document.getElementById('tooltipLabel');
+    const tlValue = document.getElementById('tooltipValue');
+    const tlClose = document.getElementById('tooltipClose');
+    function showTooltip(label, value) {
+      tlLabel.textContent = label; tlValue.textContent = value;
+      tooltip.classList.add('show');
+    }
+    document.getElementById('btnEmail').addEventListener('click', e => { e.preventDefault(); showTooltip('Adresse e-mail', 'maelcombesp@gmail.com'); });
+    document.getElementById('btnPhone').addEventListener('click', e => { e.preventDefault(); showTooltip('Numéro de téléphone', '07 66 12 16 16'); });
+    tlClose.addEventListener('click', () => tooltip.classList.remove('show'));
+    document.addEventListener('click', e => {
+      if (!tooltip.contains(e.target) && e.target.id !== 'btnEmail' && e.target.id !== 'btnPhone')
+        tooltip.classList.remove('show');
+    });
+  </script>
 </body>
 </html>
