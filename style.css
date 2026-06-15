@@ -199,9 +199,12 @@ footer {
   margin-bottom: 2.5rem;
 }
 .hero-avatar-photo {
-  width: 88px; height: 88px; border-radius: 50%; flex-shrink: 0;
-  object-fit: cover; border: 2px solid var(--accent);
+  width: 100px; height: 100px; border-radius: 50%; flex-shrink: 0;
+  object-fit: cover;
+  border: 2.5px solid var(--accent);
+  box-shadow: 0 0 0 5px rgba(79,142,247,.12);
   opacity: 0; animation: fadeUp .6s .2s forwards;
+  background: transparent;
 }
 .hero-avatar {
   width: 88px; height: 88px; border-radius: 50%; flex-shrink: 0;
